@@ -42,6 +42,7 @@ public class Jogo extends javax.swing.JFrame {
         stop = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Jogo");
 
         tempo.setText("<Tempo>");
 

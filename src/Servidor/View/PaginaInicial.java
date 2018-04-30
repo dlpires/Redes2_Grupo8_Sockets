@@ -38,6 +38,7 @@ public class PaginaInicial extends javax.swing.JFrame {
         sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Criar Sala");
 
         jLabel1.setText("Apelido:");
 
