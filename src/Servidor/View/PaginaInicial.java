@@ -5,6 +5,12 @@
  */
 package Servidor.View;
 
+import Servidor.Classes.Jogador;
+import Servidor.Classes.Sala;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author dlpires
@@ -16,6 +22,7 @@ public class PaginaInicial extends javax.swing.JFrame {
      */
     public PaginaInicial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -54,6 +61,11 @@ public class PaginaInicial extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaLetras);
 
         criarSala.setText("Criar Sala");
+        criarSala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarSalaActionPerformed(evt);
+            }
+        });
 
         sair.setText("Sair");
 
@@ -105,6 +117,32 @@ public class PaginaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void criarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarSalaActionPerformed
+        
+        Sala sala = new Sala();
+        
+        try {
+            //PEGANDO INFORMAÇÕES
+            sala.setNomeSala(nomeSala.getText());
+            sala.setAlfabeto(listaLetras.getSelectedValuesList());
+            
+            //adicionando maquina do servidor como jogador
+            Jogador jogador = new Jogador();
+            jogador.setApelido(apelido.getText());
+            sala.getJogadores().add(jogador);
+            
+            //ABRINDO SALA DE ESPERA
+            SalaDeEspera salaEspera = new SalaDeEspera(sala);
+            salaEspera.setVisible(true);
+            this.dispose();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PaginaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_criarSalaActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */

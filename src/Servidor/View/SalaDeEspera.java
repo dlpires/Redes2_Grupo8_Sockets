@@ -5,17 +5,28 @@
  */
 package Servidor.View;
 
+import Servidor.Classes.Sala;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  *
  * @author dlpires
  */
 public class SalaDeEspera extends javax.swing.JFrame {
 
+    private Sala sala;
+    
     /**
      * Creates new form SalaDeEspera
+     * @param sala
      */
-    public SalaDeEspera() {
+    public SalaDeEspera(Sala sala) throws UnknownHostException, IOException {
         initComponents();
+        setLocationRelativeTo(null);
+        this.sala = sala;
+        setServidor();
     }
 
     /**
@@ -31,7 +42,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
         listaParticip = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         iniciarPartida = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        dadosServer = new javax.swing.JLabel();
         cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -43,7 +54,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
 
         iniciarPartida.setText("Iniciar");
 
-        jLabel2.setText("Servidor: <IP>:<Porta>");
+        dadosServer.setText("Servidor: <IP>:<Porta>");
 
         cancelar.setText("Cancelar");
 
@@ -62,7 +73,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(dadosServer)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
                                 .addComponent(iniciarPartida)
@@ -74,7 +85,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel2)
+                .addComponent(dadosServer)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -96,10 +107,18 @@ public class SalaDeEspera extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelar;
+    private javax.swing.JLabel dadosServer;
     private javax.swing.JButton iniciarPartida;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listaParticip;
     // End of variables declaration//GEN-END:variables
+
+    private void setServidor() throws UnknownHostException, IOException {
+        dadosServer.setText("Servidor: " + InetAddress.getLocalHost().getHostAddress() + ":12345");
+        //CRIANDO CONEXÃO
+        //while(true){
+        //    sala.getConexao().connectServer(12345);
+        //}
+    }
 }
