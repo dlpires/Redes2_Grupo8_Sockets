@@ -5,6 +5,8 @@
  */
 package Servidor.View;
 
+import Servidor.Classes.TempodeJogo;
+
 /**
  *
  * @author dlpires
@@ -16,6 +18,7 @@ public class Jogo extends javax.swing.JFrame {
      */
     public Jogo() {
         initComponents();
+        TempodeJogo tp = new TempodeJogo(tempo);
     }
 
     /**
