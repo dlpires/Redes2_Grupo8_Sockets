@@ -76,8 +76,8 @@ public class Conexao {
     }
     
     //LE O OBJETO ENVIADO
-    public String read() throws IOException {
+    public Object read() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        return in.readUTF();
+        return in.readObject();
     }
 }

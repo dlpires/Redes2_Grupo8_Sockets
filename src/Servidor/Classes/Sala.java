@@ -16,7 +16,7 @@ public class Sala {
     
     private String nomeSala;
     private ArrayList<Jogador> jogadores;
-    private List<String> alfabeto;
+    private ArrayList<Character> alfabeto;
     private Conexao conexao;
 
     
@@ -57,14 +57,26 @@ public class Sala {
     /**
      * @return the alfabeto
      */
-    public List<String> getAlfabeto() {
+    public ArrayList<Character> getAlfabeto() {
         return alfabeto;
     }
 
+    public String getAlfabetoString(){
+        String finalStr = "";
+		for (Character str : alfabeto) {
+			if (finalStr.trim().isEmpty()) {
+				finalStr = str.toString();
+			} else {
+				finalStr = finalStr + "," + str;
+			}
+		}
+	return finalStr;
+    }
+    
     /**
      * @param alfabeto the alfabeto to set
      */
-    public void setAlfabeto(List<String> alfabeto) {
+    public void setAlfabeto(ArrayList<Character> alfabeto) {
         this.alfabeto = alfabeto;
     }
 
