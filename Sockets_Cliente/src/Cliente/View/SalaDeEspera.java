@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servidor.View;
+package Cliente.View;
 
-import Servidor.Classes.Jogador;
-import Servidor.Classes.Sala;
+import Cliente.Classes.Jogador;
+import Cliente.Classes.Sala;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class SalaDeEspera extends javax.swing.JFrame {
 
-    private Sala sala;
+    private Sala sala = new Sala();;
     
     /**
      * Creates new form SalaDeEspera
@@ -171,10 +170,9 @@ public class SalaDeEspera extends javax.swing.JFrame {
 
     private void setServidor() throws UnknownHostException, IOException {
         
-        sala = new Sala();
         ArrayList<Character> alfab = new ArrayList<>();
         for (char ch = 'A'; ch <= 'G'; ch++) {
-            alfab.add(Character.valueOf(ch));  // sem autoboxing
+            alfab.add(Character.valueOf(ch));
         }
         
         sala.setNomeSala("Jogo");
@@ -182,13 +180,10 @@ public class SalaDeEspera extends javax.swing.JFrame {
         Jogador jogador = new Jogador();
         jogador.setApelido("Server");
         sala.getJogadores().add(jogador);
-       
+        
+        
         dadosServer.setText("Servidor: " + InetAddress.getLocalHost().getHostAddress() + ":12345");
         nomeSala.setText("Nome da Sala: " + sala.getNomeSala());
         alfabeto.setText("Letras: " + sala.getAlfabetoString());
-        //CRIANDO CONEXÃO
-        //while(true){
-        //sala.getConexao().connectServer(12345);
-        //}
     }
 }

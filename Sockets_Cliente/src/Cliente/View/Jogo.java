@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servidor.View;
+package Cliente.View;
 
-import Servidor.Classes.TempodeJogo;
+import Cliente.Classes.TempodeJogo;
 
 /**
  *

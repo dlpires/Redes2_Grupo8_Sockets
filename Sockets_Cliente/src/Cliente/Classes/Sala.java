@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servidor.Classes;
+package Cliente.Classes;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -17,13 +16,11 @@ public class Sala {
     private String nomeSala;
     private ArrayList<Jogador> jogadores;
     private ArrayList<Character> alfabeto;
-    private Conexao conexao;
 
     
     public Sala(){
         jogadores = new ArrayList<>();
         alfabeto = new ArrayList<>();
-        conexao = new Conexao();
     }
     
     /**
@@ -78,20 +75,6 @@ public class Sala {
      */
     public void setAlfabeto(ArrayList<Character> alfabeto) {
         this.alfabeto = alfabeto;
-    }
-
-    /**
-     * @return the conexao
-     */
-    public Conexao getConexao() {
-        return conexao;
-    }
-
-    /**
-     * @param conexao the conexao to set
-     */
-    public void setConexao(Conexao conexao) {
-        this.conexao = conexao;
     }
     
 }
