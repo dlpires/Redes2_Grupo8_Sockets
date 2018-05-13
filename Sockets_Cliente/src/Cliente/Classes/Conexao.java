@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servidor.Classes;
+package Cliente.Classes;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
  *
  * @author dlpires
+ * 
+ * FAZ A CONEXÃO E COMUNICAÇÃO
  */
 public class Conexao {
 
     private Socket socket;
     private String ip;
-    private Integer porta;
+    private int porta;
     
     /**
      * @return the ip
@@ -39,29 +41,22 @@ public class Conexao {
     /**
      * @return the porta
      */
-    public Integer getPorta() {
+    public int getPorta() {
         return porta;
     }
 
     /**
      * @param porta the porta to set
      */
-    public void setPorta(Integer porta) {
+    public void setPorta(int porta) {
         this.porta = porta;
-    }
-    
-    //CONEXÃO SERVIDOR
-    public void connectServer(int porta) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(porta);
-        this.porta = porta;
-        socket = serverSocket.accept();
     }
     
     //CONEXÃO CLIENTE
     public void connectClient(String ip, int porta) throws UnknownHostException, IOException {
         socket = new Socket(ip, porta);
-        this.ip = ip;
-        this.porta = porta;
+        this.setIp(ip);
+        this.setPorta(porta);
     }
     
     //FECHA A CONEXÃO DO SOCKET
@@ -76,8 +71,8 @@ public class Conexao {
     }
     
     //LE O OBJETO ENVIADO
-    public String read() throws IOException {
+    public Object readObject() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        return in.readUTF();
+        return in.readObject();
     }
 }

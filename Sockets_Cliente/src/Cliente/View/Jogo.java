@@ -3,9 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servidor.View;
+package Cliente.View;
 
-import Servidor.Classes.TempodeJogo;
+import Cliente.Classes.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,12 +18,19 @@ import Servidor.Classes.TempodeJogo;
  */
 public class Jogo extends javax.swing.JFrame {
 
+    
+    private Conexao con;
+    private Jogador jogador;
+    
     /**
      * Creates new form Jogo
      */
-    public Jogo() {
+    public Jogo(Conexao con, Jogador jogador) {
         initComponents();
         TempodeJogo tp = new TempodeJogo(tempo);
+        
+        this.con = con;
+        this.jogador = jogador;
     }
 
     /**
@@ -147,7 +159,22 @@ public class Jogo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        // TODO add your handling code here:
+        
+        HashMap<String, String> respostas = new HashMap<>();
+        
+        respostas.put("nome", nome.getText().isEmpty() ? " " : nome.getText());
+        respostas.put("animal", animal.getText().isEmpty() ? " " : animal.getText());
+        respostas.put("objeto", objeto.getText().isEmpty()? " " : objeto.getText());
+        respostas.put("cep", cep.getText().isEmpty() ? " " : cep.getText());
+        respostas.put("cor", cor.getText().isEmpty() ? " " : cor.getText());
+        
+        jogador.setRespostas(respostas);
+        
+        try {
+            con.writeJogador(jogador);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ao servidor!");
+        }
     }//GEN-LAST:event_stopActionPerformed
 
 
@@ -166,4 +193,7 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JButton stop;
     private javax.swing.JLabel tempo;
     // End of variables declaration//GEN-END:variables
+    
+    
+
 }
