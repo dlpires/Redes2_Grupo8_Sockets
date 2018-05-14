@@ -5,10 +5,13 @@
  */
 package Cliente.Classes;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -23,6 +26,9 @@ public class Conexao {
     private Socket socket;
     private String ip;
     private int porta;
+    private InputStream in;
+    private OutputStream out;
+    
     
     /**
      * @return the ip
@@ -54,9 +60,15 @@ public class Conexao {
     
     //CONEXÃO CLIENTE
     public void connectClient(String ip, int porta) throws UnknownHostException, IOException {
-        socket = new Socket(ip, porta);
-        this.setIp(ip);
-        this.setPorta(porta);
+        try {
+            this.socket = new Socket(ip, porta);
+            this.ip = ip;
+            this.porta = porta;
+            this.out = socket.getOutputStream();
+            this.in = socket.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     //FECHA A CONEXÃO DO SOCKET
@@ -66,13 +78,18 @@ public class Conexao {
     
     //MANDA O OBJETO JOGADOR
     public void writeJogador(Jogador jogador) throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(jogador);
+        ObjectOutputStream object = new ObjectOutputStream(out);
+        object.writeObject(jogador);
+    }
+    
+    public String readString() throws IOException{
+        BufferedReader buffin = new BufferedReader(new InputStreamReader(in));
+        return buffin.readLine();
     }
     
     //LE O OBJETO ENVIADO
     public Object readObject() throws IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        return in.readObject();
+        ObjectInputStream object = new ObjectInputStream(in);
+        return object.readObject();
     }
 }

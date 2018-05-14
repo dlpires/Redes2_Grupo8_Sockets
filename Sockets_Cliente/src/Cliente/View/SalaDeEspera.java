@@ -6,6 +6,7 @@
 package Cliente.View;
 
 import Cliente.Classes.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class SalaDeEspera extends javax.swing.JFrame {
         
         //ATUALIZA LISTA AUTOMATICAMENTE, A CADA 10 SEGUNDOS
         atualizaDados();
+        
+        iniciarJogo();
     }
 
     /**
@@ -157,9 +160,11 @@ public class SalaDeEspera extends javax.swing.JFrame {
         if (timer == null) {
                    timer = new Timer();
                    TimerTask tarefa = new TimerTask() {
+                       @Override
                        public void run() {
                            try {
                               atualizaLista();
+                              iniciarJogo();
                            } catch (Exception e) {
                                e.printStackTrace();
                            }
@@ -181,6 +186,14 @@ public class SalaDeEspera extends javax.swing.JFrame {
         
         //ADICIONANDO DADOS A LISTA
         listaParticip.setModel(l);
+    }
+
+    private void iniciarJogo() throws IOException {
+        String response = con.readString();
+        if ("start".equalsIgnoreCase(response)){
+            new Jogo(con, jogador).setVisible(true);
+            this.dispose();
+        }
     }
     
 }
