@@ -28,6 +28,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
     
     private Conexao con;
     private Jogador jogador;
+    private Timer timer;
     
     public SalaDeEspera(Conexao con, Jogador jogador) throws UnknownHostException, IOException, ClassNotFoundException {
         initComponents();
@@ -155,7 +156,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
     //AUTOMATIZA A ATUALIZAÇÃO DA JLIST
     private void atualizaDados(){
         long intervaloDeAtualizacao = 1000; // intervalo de 1 segundos  
-        Timer timer = new Timer();
+        timer = new Timer();
         
         if (timer == null) {
                    timer = new Timer();
@@ -192,6 +193,7 @@ public class SalaDeEspera extends javax.swing.JFrame {
         String response = con.readString();
         if ("start".equalsIgnoreCase(response)){
             new Jogo(con, jogador).setVisible(true);
+            timer.cancel();
             this.dispose();
         }
     }

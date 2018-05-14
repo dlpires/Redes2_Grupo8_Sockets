@@ -27,7 +27,10 @@ public class Jogo extends javax.swing.JFrame {
      */
     public Jogo(Conexao con, Jogador jogador) {
         initComponents();
+        setLocationRelativeTo(null);
         TempodeJogo tp = new TempodeJogo(tempo);
+        
+        finish();
         
         this.con = con;
         this.jogador = jogador;
@@ -159,22 +162,7 @@ public class Jogo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        
-        HashMap<String, String> respostas = new HashMap<>();
-        
-        respostas.put("nome", nome.getText().isEmpty() ? " " : nome.getText());
-        respostas.put("animal", animal.getText().isEmpty() ? " " : animal.getText());
-        respostas.put("objeto", objeto.getText().isEmpty()? " " : objeto.getText());
-        respostas.put("cep", cep.getText().isEmpty() ? " " : cep.getText());
-        respostas.put("cor", cor.getText().isEmpty() ? " " : cor.getText());
-        
-        jogador.setRespostas(respostas);
-        
-        try {
-            con.writeJogador(jogador);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao servidor!");
-        }
+        enviarRespostas();
     }//GEN-LAST:event_stopActionPerformed
 
 
@@ -193,7 +181,50 @@ public class Jogo extends javax.swing.JFrame {
     private javax.swing.JButton stop;
     private javax.swing.JLabel tempo;
     // End of variables declaration//GEN-END:variables
+
+
+    private void finish() {
+        Thread t = new Thread(){
+            @Override
+            public void run(){
+                resultados();
+            }
+        };
+        t.start();
+    }
     
-    
+    public void resultados(){
+        String response;
+        try {
+            while ((response = con.readString()) != null){
+                if ("stop".equalsIgnoreCase(response)){
+                    enviarRespostas();
+                    //new Jogo(con, jogador).setVisible(true);
+                    //this.dispose();
+                }
+            }
+                
+        } catch (IOException ex) {
+            Logger.getLogger(Jogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void enviarRespostas() {
+        HashMap<String, String> respostas = new HashMap<>();
+        
+        respostas.put("nome", nome.getText().isEmpty() ? " " : nome.getText());
+        respostas.put("animal", animal.getText().isEmpty() ? " " : animal.getText());
+        respostas.put("objeto", objeto.getText().isEmpty()? " " : objeto.getText());
+        respostas.put("cep", cep.getText().isEmpty() ? " " : cep.getText());
+        respostas.put("cor", cor.getText().isEmpty() ? " " : cor.getText());
+        
+        jogador.setRespostas(respostas);
+        
+        try {
+            con.writeJogador(jogador);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ao servidor!");
+        }
+    }
 
 }
